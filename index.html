@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Rani 🎂</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="star-layer"></div>
+<div id="petal-layer"></div>
+<canvas id="confetti-canvas"></canvas>
+<canvas id="heart-canvas"></canvas>
+
+<!-- 5 audio, semua dimulai dalam kondisi mute+play (diizinkan browser tanpa sentuhan),
+     lalu tinggal di-unmute satu-satu sesuai section aktif -> pindah section jadi mulus tanpa perlu tap -->
+<audio id="bgm-pin" src="sound/sound2.mp3" loop muted></audio>
+<audio id="bgm-candle" src="sound/sound1.mp3" loop muted></audio>
+<audio id="bgm-message" src="sound/sound3.mp3" loop muted></audio>
+<audio id="bgm-gallery" src="sound/sound4.mp3" loop muted></audio>
+<audio id="bgm-success" src="sound/sound5.mp3" loop muted></audio>
+
+<div class="step-dots" id="stepDots">
+  <span class="active"></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- ================= SECTION 1: PIN ================= -->
+<section class="page app-section active" id="sec-pin">
+  <div class="eyebrow">hm hm hm hm</div>
+  <h1 class="title" style="font-size:clamp(2.2rem,6vw,3.6rem);">Masukkan PIN</h1>
+  <div class="subtitle serif">HAYOO PIRO ONGKONE</div>
+
+  <div class="pin-boxes" id="pinBoxes" style="margin-top:2.4rem;"></div>
+  <div class="pin-keypad" id="pinKeypad"></div>
+  <div class="pw-msg" id="pinMsg"></div>
+</section>
+
+<!-- overlay animasi ledakan mewah saat PIN benar -->
+<div id="blast-overlay">
+  <div class="blast-flash"></div>
+  <div class="blast-ring"></div>
+  <div class="blast-ring"></div>
+  <div class="blast-ring"></div>
+  <div class="blast-core"></div>
+  <div class="blast-text">Selamat Ulang Tahun ✨</div>
+</div>
+
+<!-- ================= SECTION 2: LILIN ================= -->
+<section class="page app-section" id="sec-candle">
+  <div class="eyebrow">Untuk seseorang yang istimewa</div>
+  <h1 class="title">Selamat<br>🥳Ulang Tahun🥳</h1>
+  <div class="subtitle serif">— Rani Pradiyanti —</div>
+
+  <div class="candle-wrap">
+    <svg class="cake" viewBox="0 0 200 160" id="cakeSvg" aria-label="Tiup lilin">
+      <ellipse cx="100" cy="140" rx="90" ry="14" fill="#241226"/>
+      <rect x="25" y="95" width="150" height="45" rx="10" fill="#f4d7cf"/>
+      <rect x="25" y="95" width="150" height="14" rx="7" fill="#ffe9df"/>
+      <rect x="40" y="65" width="120" height="35" rx="10" fill="#e8637e"/>
+      <rect x="40" y="65" width="120" height="12" rx="6" fill="#f6a3b4"/>
+      <rect x="97" y="35" width="6" height="32" rx="3" fill="#f0c68a"/>
+      <g class="flame" id="flame">
+        <ellipse cx="100" cy="28" rx="7" ry="12" fill="#ffb199"/>
+        <ellipse cx="100" cy="30" rx="4" ry="7" fill="#f0c68a"/>
+      </g>
+      <circle cx="65" cy="80" r="4" fill="#fff3ec"/>
+      <circle cx="90" cy="85" r="4" fill="#fff3ec"/>
+      <circle cx="120" cy="80" r="4" fill="#fff3ec"/>
+      <circle cx="140" cy="86" r="4" fill="#fff3ec"/>
+    </svg>
+    <div class="hint" id="candleHint">Tiup lilinnya, yuk — <b>klik lilinnya</b> 🕯️</div>
+  </div>
+</section>
+
+<!-- ================= SECTION 3: SURAT ================= -->
+<section class="page app-section" id="sec-message">
+  <div class="eyebrow">Sepenuh hati</div>
+  <h1 class="title" style="font-size:clamp(2.2rem,6vw,3.6rem);">Untuk Rani-ku, Anjayy😏</h1>
+
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelope">
+      <div class="letter"></div>
+      <div class="body"></div>
+      <div class="flap"></div>
+    </div>
+    <div class="envelope-hint" id="envHint">klik amplopnya untuk membuka</div>
+  </div>
+
+  <div class="message-box" id="msgBox">
+    <p>Hmmmmmm op yo, anuuu tak kiro ultahmu tak kiro tanggal 16 ternyata 13😭😭😭, bien retiku tanggal 16 tibake salah padahal kae ws tak cicil web e tapi rung bar😭 jadi yaaaa telat ngirimku web iki, maafff hehe😋😋.</p>
+    <p>Padahal aku jane ws tak eling-eling ultahmu terus nk koe ngode ngono kae, ak asline paham tapi emang sengaja ketoro begoo hehe😋😋 pengenku pas ketemu ak kei kado ngo koe ben surprise🥳, tapi rasido surprise ternayata tanggal 13, gagal deh😖😖 .</p>
+    <p>Oke lanjuttt Kesampingkan hal kui, SELAMAT ULANG TAHUN SAYANGGGG😘, hehe walaupun telat😅 selamat umurke 21 nya, anjay dadi tante-tante🤣, tak celuk tante yo saiki, canda yang hehe😋.</p>
+    <p>Semoga Sehat selalu sayang, tambah pinter, tambah baik, tambah ged-, eeeh maksute diperbanyak rezekine ben iso jajan😂 tapi tetep dijogo pola makane yaa, Trus Semoga Hubungane Adwe langgeng yaa sampai dadi ibadah terpanjang, anjayy😋.</p>
+    <p>LOVE YOU SAYANG</p>
+    <div class="signoff">Si Keren Rama😎</div>
+  </div>
+
+  <button class="next-btn" id="toGalleryBtn" style="opacity:0; pointer-events:none; transition:opacity .5s ease;">Lihat kenangan kita →</button>
+</section>
+
+<!-- ================= SECTION 4: GALERI ================= -->
+<section class="page app-section" id="sec-gallery" style="padding-top:6rem;">
+  <div class="eyebrow reveal in">Galeri</div>
+  <h1 class="title reveal in" style="font-size:clamp(2.2rem,6vw,3.6rem);">Sepotong Kenangan Kita</h1>
+  <div class="subtitle serif reveal in">satu per satu, terbang menghiasi cerita kita</div>
+
+  <div class="orbit-stage" id="orbitStage">
+    <div class="orbit-center" id="orbitCenter">
+      <div class="orbit-videos">
+        <div class="orbit-video-wrap">
+          <video class="orbit-video" src="video/video1.mp4" muted loop playsinline></video>
+        </div>
+        <div class="orbit-video-wrap portrait">
+          <video class="orbit-video" src="video/video2.mp4" muted loop playsinline></video>
+        </div>
+        <div class="orbit-video-wrap">
+          <video class="orbit-video" src="video/video3.mp4" muted loop playsinline></video>
+        </div>
+      </div>
+      <div class="orbit-center-caption">tekan video untuk suara</div>
+    </div>
+    <!-- 18 foto akan terbang menyebar mengelilingi video via JS -->
+  </div>
+</section>
+
+<!-- ================= SECTION 5: PENUTUP ================= -->
+<section class="page app-section" id="sec-success" style="justify-content:flex-end; padding-bottom:8vh;">
+  <div class="bloom-scene">
+    <div class="bloom-stage" id="bloomStage"></div>
+    <div class="bloom-haze"></div>
+  </div>
+
+  <div class="bloom-content reveal in">
+    <h1 class="title" style="font-size:clamp(2.4rem,7.5vw,4.2rem);">Selamat Ulang<br>Tahun, Sayang 🎂</h1>
+    <p class="subtitle serif">Semoga tahun ini penuh tawa, kejutan manis, dan hal-hal baik yang datang tanpa diminta — seperti bunga yang terus mekar tanpa diminta.</p>
+    <button class="next-btn solid" id="heartBtn">Kirim Pelukan Virtual 🤍</button>
+    <div style="margin-top:2rem;">
+      <button class="next-btn" id="restartBtn" style="font-size:.85rem; padding:.6rem 1.4rem;">↺ ulang dari awal</button>
+    </div>
+  </div>
+  <footer class="page-footer" style="text-align:center; width:100%;">dibuat dengan sepenuh hati, untuk Rani Pradiyanti</footer>
+</section>
+
+<!-- overlay efek "kirim pelukan virtual" -->
+<div class="hug-overlay" id="hugOverlay">
+  <div class="hug-ring"></div>
+  <div class="hug-ring"></div>
+  <div class="hug-ring"></div>
+  <svg class="hug-heart-svg" viewBox="0 0 100 90">
+    <defs>
+      <linearGradient id="hugGrad" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0%" stop-color="#e8637e"/>
+        <stop offset="100%" stop-color="#f0c68a"/>
+      </linearGradient>
+    </defs>
+    <path d="M50 85 C 10 55, -10 25, 20 8 C 38 -3, 50 12, 50 22 C 50 12, 62 -3, 80 8 C 110 25, 90 55, 50 85 Z" fill="url(#hugGrad)"/>
+  </svg>
+  <div class="hug-text" id="hugText">Pelukan hangat sudah terkirim ke Rani 🤍</div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+/* =======================================================================
+   PENGATUR SECTION (SPA) + AUDIO MULUS TANPA PERLU TAP DI TIAP HALAMAN
+   Trik: semua audio langsung diputar dalam kondisi MUTED sejak awal
+   (browser selalu izinkan autoplay ber-suara MUTE tanpa perlu sentuhan).
+   Saat pindah section, kita tinggal UNMUTE audio section itu -- karena
+   audionya sudah terlanjur "playing", unmute ini tidak diblokir browser.
+   ======================================================================= */
+const SECTION_ORDER = ['pin','candle','message','gallery','success'];
+const AUDIO_MAP = {
+  pin:     document.getElementById('bgm-pin'),
+  candle:  document.getElementById('bgm-candle'),
+  message: document.getElementById('bgm-message'),
+  gallery: document.getElementById('bgm-gallery'),
+  success: document.getElementById('bgm-success'),
+};
+const stepDotsWrap = document.getElementById('stepDots');
+
+// nyalakan semua audio dalam kondisi mute sejak awal (selalu diizinkan browser)
+Object.values(AUDIO_MAP).forEach(a=>{
+  a.muted = true;
+  a.play().catch(()=>{});
+});
+
+let currentSection = 'pin';
+
+function goToSection(name){
+  if(!SECTION_ORDER.includes(name)) return;
+  currentSection = name;
+
+  // tampilkan section target, sembunyikan lainnya
+  SECTION_ORDER.forEach(key=>{
+    const el = document.getElementById('sec-'+key);
+    if(!el) return;
+    el.classList.toggle('active', key === name);
+  });
+
+  // update titik langkah
+  const idx = SECTION_ORDER.indexOf(name);
+  [...stepDotsWrap.children].forEach((dot,i)=> dot.classList.toggle('active', i === idx));
+
+  // unmute audio section aktif, mute semua yang lain
+  Object.entries(AUDIO_MAP).forEach(([key, audio])=>{
+    if(key === name){
+      audio.muted = false;
+      if(audio.paused) audio.play().catch(()=>{});
+    } else {
+      audio.muted = true;
+    }
+  });
+
+  // hentikan bunga ambient kecil begitu masuk penutup (biar tidak menumpuk dgn taman bunga besar)
+  if(name === 'success' && window.__flowerInterval){
+    clearInterval(window.__flowerInterval);
+  }
+
+  // jalankan inisialisasi khusus tiap section (sekali saja / reset tiap masuk)
+  if(name === 'candle') initCandleSection();
+  if(name === 'message') initMessageSection();
+  if(name === 'gallery') initGallerySection();
+  if(name === 'success') initSuccessSection();
+}
+
+// jaring pengaman: kalau ada browser yang tetap memblokir, sentuhan pertama akan memaksa audio aktif jalan
+document.addEventListener('click', ()=>{
+  const a = AUDIO_MAP[currentSection];
+  if(a && a.paused) a.play().catch(()=>{});
+}, { passive:true });
+document.addEventListener('touchstart', ()=>{
+  const a = AUDIO_MAP[currentSection];
+  if(a && a.paused) a.play().catch(()=>{});
+}, { passive:true });
+</script>
+
+<script>
+/* ================= LOGIKA SECTION 1: PIN ================= */
+(function(){
+  const PIN = "22032026";
+  const LEN = PIN.length;
+
+  const boxesWrap = document.getElementById('pinBoxes');
+  const keypadWrap = document.getElementById('pinKeypad');
+  const msg = document.getElementById('pinMsg');
+  const overlay = document.getElementById('blast-overlay');
+
+  // siapkan pecahan cahaya (shard) untuk animasi ledakan
+  const shardCount = 22;
+  for(let i=0;i<shardCount;i++){
+    const s = document.createElement('div');
+    s.className = 'blast-shard';
+    const ang = (360/shardCount)*i + (Math.random()*10-5);
+    const dist = 160 + Math.random()*220;
+    s.style.setProperty('--ang', ang+'deg');
+    s.style.setProperty('--dist', dist+'px');
+    s.style.background = i % 3 === 0 ? 'var(--rose)' : (i % 3 === 1 ? 'var(--gold)' : 'var(--peach)');
+    overlay.appendChild(s);
+  }
+
+  // bangun kotak-kotak digit PIN
+  const boxes = [];
+  for(let i=0; i<LEN; i++){
+    const box = document.createElement('input');
+    box.type = 'tel';
+    box.inputMode = 'numeric';
+    box.maxLength = 1;
+    box.className = 'pin-box';
+    box.autocomplete = 'off';
+    boxesWrap.appendChild(box);
+    boxes.push(box);
+  }
+
+  function currentValue(){ return boxes.map(b=> b.value).join(''); }
+
+  function setDigit(i, val){
+    if(i<0 || i>=LEN) return;
+    boxes[i].value = val;
+  }
+
+  function focusBox(i){
+    if(i>=0 && i<LEN) boxes[i].focus();
+  }
+
+  function clearAll(){
+    boxes.forEach(b=> b.value = '');
+    focusBox(0);
+  }
+
+  function checkComplete(){
+    if(currentValue().length === LEN){
+      setTimeout(verifyPin, 150);
+    }
+  }
+
+  function verifyPin(){
+    if(currentValue() === PIN){
+      msg.className = 'pw-msg';
+      msg.textContent = 'Betul! Bersiaplah ✨';
+      boxes.forEach(b=> b.disabled = true);
+      keypadWrap.querySelectorAll('.pin-key').forEach(k=> k.disabled = true);
+
+      burstConfetti(window.innerWidth/2, window.innerHeight*0.5, 140);
+      overlay.classList.add('firing');
+
+      setTimeout(()=>{ goToSection('candle'); }, 1500);
+    } else {
+      msg.className = 'pw-msg err';
+      msg.textContent = 'Belum tepat, coba lagi ya~';
+      boxesWrap.classList.remove('shake');
+      void boxesWrap.offsetWidth; // reset animasi
+      boxesWrap.classList.add('shake');
+      setTimeout(clearAll, 420);
+    }
+  }
+
+  // interaksi keyboard fisik langsung di kotak-kotak
+  boxes.forEach((box, i)=>{
+    box.addEventListener('input', ()=>{
+      box.value = box.value.replace(/[^0-9]/g,'').slice(-1);
+      if(box.value){ focusBox(i+1); }
+      checkComplete();
+    });
+    box.addEventListener('keydown', (e)=>{
+      if(e.key === 'Backspace' && !box.value){ focusBox(i-1); }
+    });
+  });
+
+  // keypad angka di layar
+  const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫'];
+  keys.forEach(k=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    if(k === ''){
+      btn.style.visibility = 'hidden';
+      btn.disabled = true;
+    } else {
+      btn.textContent = k;
+    }
+    btn.className = 'pin-key';
+    btn.addEventListener('click', ()=>{
+      const val = currentValue();
+      if(k === '⌫'){
+        const lastFilled = val.length - 1;
+        if(lastFilled >= 0){ setDigit(lastFilled, ''); focusBox(lastFilled); }
+      } else if(k !== '' && val.length < LEN){
+        setDigit(val.length, k);
+        focusBox(val.length + 1 < LEN ? val.length + 1 : val.length);
+        checkComplete();
+      }
+    });
+    keypadWrap.appendChild(btn);
+  });
+
+  focusBox(0);
+})();
+</script>
+
+<script>
+/* ================= LOGIKA SECTION 2: LILIN ================= */
+let candleInitDone = false;
+function initCandleSection(){
+  if(candleInitDone) return;
+  candleInitDone = true;
+
+  const cakeSvg = document.getElementById('cakeSvg');
+  const flame = document.getElementById('flame');
+  const candleHint = document.getElementById('candleHint');
+  let blown = false;
+  cakeSvg.addEventListener('click', ()=>{
+    if(blown) return;
+    blown = true;
+    flame.classList.add('out');
+    candleHint.innerHTML = 'Semoga semua harapanmu terkabul ✨';
+    burstConfetti(window.innerWidth/2, window.innerHeight*0.55, 80);
+    setTimeout(()=>{ goToSection('message'); }, 1800);
+  });
+}
+
+/* ================= LOGIKA SECTION 3: SURAT ================= */
+let messageInitDone = false;
+function initMessageSection(){
+  if(messageInitDone) return;
+  messageInitDone = true;
+
+  const envelope = document.getElementById('envelope');
+  const envHint = document.getElementById('envHint');
+  const msgBox = document.getElementById('msgBox');
+  const nextBtn = document.getElementById('toGalleryBtn');
+  let opened = false;
+  envelope.addEventListener('click', ()=>{
+    if(opened) return;
+    opened = true;
+    envelope.classList.add('open');
+    envHint.textContent = '💌';
+    setTimeout(()=>{
+      msgBox.classList.add('show');
+      nextBtn.style.opacity = 1;
+      nextBtn.style.pointerEvents = 'auto';
+      burstConfetti(window.innerWidth/2, window.innerHeight*0.4, 50);
+    }, 500);
+  });
+  nextBtn.addEventListener('click', ()=> goToSection('gallery'));
+}
+</script>
+
+<script>
+/* ================= LOGIKA SECTION 4: GALERI ================= */
+let galleryInitDone = false;
+function initGallerySection(){
+  if(galleryInitDone) return;
+  galleryInitDone = true;
+
+  const TOTAL_PHOTOS = 18;
+  const EXT = 'jpeg';
+  const stage = document.getElementById('orbitStage');
+  const centerEl = document.getElementById('orbitCenter');
+
+  // video mulai diputar begitu section galeri aktif (tanpa suara, cukup suara dari klik manual)
+  document.querySelectorAll('.orbit-video').forEach(v=>{
+    v.play().catch(()=>{});
+    v.addEventListener('click', ()=>{ v.muted = !v.muted; });
+  });
+
+  const cells = [];
+  for(let i=0; i<TOTAL_PHOTOS; i++){
+    const cell = document.createElement('div');
+    cell.className = 'orbit-photo';
+
+    const filename = `foto${i+1}.${EXT}`;
+    cell.innerHTML = `<div class="orbit-photo-inner"><img src="foto/${filename}" alt="Rani - foto ${i+1}" loading="lazy"></div>`;
+    const img = cell.querySelector('img');
+    img.addEventListener('error', ()=> cell.classList.add('missing'));
+
+    stage.appendChild(cell);
+    cells.push({ el: cell });
+  }
+
+  function applyFinalTransform(item, dxPct, dyPct, stageSize){
+    const rot = (Math.random()*20 - 10).toFixed(1);
+    const dxPx = (dxPct/100) * stageSize;
+    const dyPx = (dyPct/100) * stageSize;
+    item.el.style.transform = `translate(-50%,-50%) translate(${dxPx}px, ${dyPx}px) rotate(${rot}deg) scale(1)`;
+    const inner = item.el.querySelector('.orbit-photo-inner');
+    inner.style.setProperty('--fdur', (3.8 + Math.random()*2.6).toFixed(2)+'s');
+    inner.style.setProperty('--fdelay', (Math.random()*2).toFixed(2)+'s');
+    inner.style.setProperty('--frot', ((Math.random()*6)-3).toFixed(2)+'deg');
+    inner.style.setProperty('--fdx1', (Math.random()*36-18).toFixed(1)+'px');
+    inner.style.setProperty('--fdy1', (Math.random()*26-30).toFixed(1)+'px');
+    inner.style.setProperty('--fdx2', (Math.random()*36-18).toFixed(1)+'px');
+    inner.style.setProperty('--fdy2', (Math.random()*28-40).toFixed(1)+'px');
+    inner.style.setProperty('--fdx3', (Math.random()*36-18).toFixed(1)+'px');
+    inner.style.setProperty('--fdy3', (Math.random()*24-20).toFixed(1)+'px');
+  }
+
+  // section baru saja jadi 'display:flex' -- tunggu 1 frame biar ukurannya bisa diukur dengan benar
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      const stageRect = stage.getBoundingClientRect();
+      const stageSize = stageRect.width;
+      setTimeout(()=> centerEl.classList.add('show'), 100);
+
+      const centerRect = centerEl.getBoundingClientRect();
+      const halfWPct = ((centerRect.width/2) / stageSize) * 100 + 9;
+      const halfHPct = ((centerRect.height/2) / stageSize) * 100 + 9;
+      const photoHalfPct = 6;
+
+      cells.forEach((item, i)=>{
+        const angle = (i / TOTAL_PHOTOS) * Math.PI * 2 + (Math.random()*0.35 - 0.175);
+        let radiusPct = 30 + Math.random()*10;
+        let dx = Math.cos(angle) * radiusPct;
+        let dy = Math.sin(angle) * radiusPct;
+
+        let guard = 0;
+        while(Math.abs(dx) < halfWPct + photoHalfPct && Math.abs(dy) < halfHPct + photoHalfPct && guard < 40){
+          radiusPct += 2;
+          dx = Math.cos(angle) * radiusPct;
+          dy = Math.sin(angle) * radiusPct;
+          guard++;
+        }
+
+        setTimeout(()=>{
+          item.el.classList.add('show');
+          applyFinalTransform(item, dx, dy, stageSize);
+        }, 500 + i * 100);
+      });
+    });
+  });
+
+  // otomatis pindah ke halaman berikutnya setelah 30 detik (murni otomatis, tanpa tombol)
+  setTimeout(()=>{ if(currentSection === 'gallery') goToSection('success'); }, 30000);
+}
+</script>
+
+<script>
+/* ================= LOGIKA SECTION 5: PENUTUP ================= */
+let successInitDone = false;
+function initSuccessSection(){
+  if(successInitDone) return;
+  successInitDone = true;
+
+  const stage = document.getElementById('bloomStage');
+  function rand(min, max){ return Math.random() * (max - min) + min; }
+  function el(cls){ const d = document.createElement('div'); d.className = cls; return d; }
+
+  const petalColorPairs = [
+    ['var(--rose)','var(--peach)'],
+    ['var(--peach)','#fff3ec'],
+    ['#f6a3b4','var(--gold)']
+  ];
+
+  function buildFlower({ leftPct, rot, stemH, scale, growDelay, bloomDelay }){
+    const flower = el('bflower');
+    flower.style.left = leftPct + '%';
+    flower.style.transform = `translateX(-50%) rotate(${rot}deg) scale(${scale})`;
+    flower.style.setProperty('--rot', rot + 'deg');
+    flower.style.setProperty('--sway', rand(3.6,5.4).toFixed(2) + 's');
+    flower.style.setProperty('--swayAmt', rand(2,4).toFixed(1) + 'deg');
+    flower.style.setProperty('--swayDelay', rand(0,1.2).toFixed(2) + 's');
+
+    const stem = el('bstem');
+    stem.style.setProperty('--stemH', stemH + 'vmin');
+    stem.style.setProperty('--growDelay', growDelay + 's');
+    flower.appendChild(stem);
+
+    const head = el('bhead');
+    head.style.setProperty('--bloomDelay', bloomDelay + 's');
+
+    const halo = el('bhalo');
+    head.appendChild(halo);
+
+    const [petalA, petalB] = petalColorPairs[Math.floor(Math.random()*petalColorPairs.length)];
+    const petalCount = 8;
+
+    for(let i=0; i<petalCount; i++){
+      const petalOuter = el('bpetal-outer');
+      petalOuter.style.setProperty('--petal-a', petalA);
+      petalOuter.style.setProperty('--petal-b', petalB);
+      petalOuter.style.transform = `rotate(${(360/petalCount)*i + 22}deg)`;
+      head.appendChild(petalOuter);
+    }
+    for(let i=0; i<petalCount; i++){
+      const petal = el('bpetal');
+      petal.style.setProperty('--petal-a', petalA);
+      petal.style.setProperty('--petal-b', petalB);
+      petal.style.setProperty('--pbdur', rand(3,4.4).toFixed(2)+'s');
+      petal.style.setProperty('--pbdelay', rand(0,2).toFixed(2)+'s');
+      petal.style.transform = `rotate(${(360/petalCount)*i}deg)`;
+      head.appendChild(petal);
+    }
+    const center = el('bcenter');
+    head.appendChild(center);
+
+    const sparkCount = 7;
+    for(let i=0; i<sparkCount; i++){
+      const spark = el('bspark' + (i % 2 === 0 ? ' alt' : ''));
+      const ang = rand(0, 360);
+      spark.style.left = (50 + Math.cos(ang*Math.PI/180)*rand(6,16)) + '%';
+      spark.style.top = (50 + Math.sin(ang*Math.PI/180)*rand(6,16)) + '%';
+      spark.style.setProperty('--sdur', rand(2.8,4.4).toFixed(2) + 's');
+      spark.style.setProperty('--sdelay', rand(0,4).toFixed(2) + 's');
+      spark.style.setProperty('--sdx', rand(-3,3).toFixed(1) + 'vmin');
+      head.appendChild(spark);
+    }
+
+    flower.appendChild(head);
+    return flower;
+  }
+
+  stage.appendChild(buildFlower({ leftPct:50, rot:1,   stemH:44, scale:1,    growDelay:.3,  bloomDelay:1.5 }));
+  stage.appendChild(buildFlower({ leftPct:62, rot:16,  stemH:37, scale:.88, growDelay:.6,  bloomDelay:1.9 }));
+  stage.appendChild(buildFlower({ leftPct:38, rot:-15, stemH:34, scale:.82, growDelay:.9,  bloomDelay:2.2 }));
+  stage.appendChild(buildFlower({ leftPct:74, rot:-8,  stemH:29, scale:.7,  growDelay:1.15, bloomDelay:2.5 }));
+  stage.appendChild(buildFlower({ leftPct:26, rot:10,  stemH:27, scale:.66, growDelay:1.35, bloomDelay:2.7 }));
+
+  const leafSpecs = [
+    { left:30, lrot:22,  lbottom:11, ldelay:.2 },
+    { left:70, lrot:-22, lbottom:12, ldelay:.5, flip:true },
+    { left:44, lrot:16,  lbottom:9,  ldelay:.8 },
+  ];
+  leafSpecs.forEach((spec, i)=>{
+    const leaf = el('bleaf');
+    leaf.style.left = spec.left + '%';
+    leaf.style.setProperty('--lrot', spec.lrot + 'deg');
+    leaf.style.setProperty('--lbottom', spec.lbottom + 'vmin');
+    leaf.style.setProperty('--lsway', rand(2.8,3.8).toFixed(2)+'s');
+    leaf.style.setProperty('--ldelay', spec.ldelay + 's');
+    leaf.style.setProperty('--lgdelay', (1 + i*.25).toFixed(2)+'s');
+    if(spec.flip) leaf.style.transform = 'scaleX(-1)';
+    stage.appendChild(leaf);
+  });
+
+  const grassWrap = el('bgrass-wrap');
+  const bladeCount = 26;
+  for(let i=0; i<bladeCount; i++){
+    const blade = el('bgrass-blade');
+    const leftPct = (i / (bladeCount-1)) * 100;
+    const h = rand(9, 22);
+    blade.style.left = leftPct + '%';
+    blade.style.height = h + 'vmin';
+    blade.style.setProperty('--grot', rand(-10,10).toFixed(1) + 'deg');
+    blade.style.setProperty('--gdur', rand(2,3.4).toFixed(2) + 's');
+    blade.style.setProperty('--gdelay', rand(0,2).toFixed(2) + 's');
+    blade.style.setProperty('--ggdelay', rand(.1, 1.6).toFixed(2) + 's');
+    grassWrap.appendChild(blade);
+  }
+  stage.appendChild(grassWrap);
+
+  const heartBtn = document.getElementById('heartBtn');
+  const hugOverlay = document.getElementById('hugOverlay');
+  const hugMessages = [
+    'Pelukan hangat sudah terkirim ke Rani 🤍',
+    'Terkirim, sampai jauh di sana pun tetap terasa 💌',
+    'Semoga pelukan ini nyampe walau lewat layar 🤎'
+  ];
+
+  heartBtn.addEventListener('click', ()=>{
+    const r = heartBtn.getBoundingClientRect();
+    const cx = r.left + r.width/2;
+    const cy = r.top + r.height/2;
+
+    heartBtn.classList.remove('heart-btn-pulse');
+    void heartBtn.offsetWidth;
+    heartBtn.classList.add('heart-btn-pulse');
+
+    burstHearts(cx, cy, 42);
+    burstConfetti(window.innerWidth/2, window.innerHeight*0.3, 60);
+
+    document.getElementById('hugText').textContent = hugMessages[Math.floor(Math.random()*hugMessages.length)];
+    hugOverlay.classList.remove('show');
+    void hugOverlay.offsetWidth;
+    hugOverlay.classList.add('show');
+
+    setTimeout(()=>{
+      burstHearts(window.innerWidth*0.15, window.innerHeight, 18);
+      burstHearts(window.innerWidth*0.85, window.innerHeight, 18);
+    }, 250);
+
+    setTimeout(()=> hugOverlay.classList.remove('show'), 2200);
+  });
+
+  document.getElementById('restartBtn').addEventListener('click', ()=>{
+    window.location.reload();
+  });
+}
+</script>
+</body>
+</html>
